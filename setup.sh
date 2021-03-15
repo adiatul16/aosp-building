@@ -14,20 +14,24 @@ repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync 
 rm -rf .repo
 
 # Sync device tree and stuffs
-rm -rf hardware/qcom-caf/msm8998/display hardware/qcom-caf/msm8998/audio hardware/qcom-caf/msm8998/media &&  git clone https://github.com/LineageOS/android_hardware_qcom_display --single-branch -b lineage-18.1-caf-msm8998 hardware/qcom-caf/msm8998/display && git clone https://github.com/LineageOS/android_hardware_qcom_audio --single-branch -b lineage-18.1-caf-msm8998 hardware/qcom-caf/msm8998/audio && git clone https://github.com/LineageOS/android_hardware_qcom_media --single-branch -b lineage-18.1-caf-msm8998 hardware/qcom-caf/msm8998/media
-rm -rf device/xiaomi vendor/xiaomi kernel/xiaomi && git clone https://github.com/ItsVixano/android_device_xiaomi_whyred --single-branch -b eleven device/xiaomi/whyred && git clone https://github.com/ItsVixano/android_vendor_xiaomi_whyred --single-branch -b eleven vendor/xiaomi/whyred --depth=1 && git clone https://github.com/SreekanthPalakurthi/kranul --single-branch --depth=1 kernel/xiaomi/whyred
-rm -rf system/sepolicy && git clone https://github.com/Bauh-Yeoj/android_system_sepolicy system/sepolicy
+git clone -b lineage-18.1 --depth=1 https://github.com/LineageOS/android_device_motorola_channel/ device/motorola/channel
+git clone -b lineage-18.1 --depth=1 https://github.com/LineageOS/android_device_motorola_sdm632-common/ device/motorola/sdm632-common
+git clone -b lineage-18.1 --depth=1 https://github.com/LineageOS/android_kernel_motorola_sdm632/ kernel/motorola/sdm632
+git clone -b lineage-18.1 --depth=1 https://github.com/TheMuppets/proprietary_vendor_motorola vendor/motorola
+git clone -b lineage-18.1 --depth=1 https://github.com/LineageOS/android_hardware_motorola/ hardware/motorola
+git clone -b lineage-18.1 --depth=1 https://github.com/LineageOS/android_system_qcom/ system/qcom
+git clone -b lineage-18.1 --depth=1 https://github.com/LineageOS/android_external_bson/ external/bson
 
 # Normal build steps
 . build/envsetup.sh
-lunch lineage_whyred-user
-export SELINUX_IGNORE_NEVERALLOWS=true
+lunch lineage_channel-userdebug
 
 # upload function for uploading rom zip file! I don't want unwanted builds in my google drive haha!
 up(){
-	curl --upload-file $1 https://transfer.sh/$(basename $1); echo
+	curl --upload-file $1 https://oshi.at/$(basename $1); echo
 	# 14 days, 10 GB limit
 }
 
 make bacon -j12
-up out/target/product/whyred/*zip
+up out/target/product/channel/*zip
+up out/target/product/channel/*json
