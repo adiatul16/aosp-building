@@ -3,11 +3,11 @@ env: # Environt variable to pass to all tasks
     CIRRUS_WORKING_DIR: "/tmp/ci" # Where to clone repo
 
 task:
-    name: ItsVixano
-    timeout_in: 120m
+    name: ROMBuild
+    timeout_in: 240m
     container:
       image: apon77/aosp:latest
-      cpu: 12
+      cpu: 16
       memory: 24G
     build_script:
       - ./setup.sh
