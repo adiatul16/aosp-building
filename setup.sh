@@ -32,6 +32,6 @@ up(){
 	# 14 days, 10 GB limit
 }
 
-make bacon -j12
+make bacon -j24
 up out/target/product/channel/*zip
 up out/target/product/channel/*json
